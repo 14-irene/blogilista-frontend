@@ -10,12 +10,34 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
+  useEffect(() => {
+    blogService.getAll().then(blogs =>
+      setBlogs( blogs )
+    )  
+  }, [])
+
+  useEffect(() => {
+    const loggedBloggerJSON = window.localStorage.getItem('loggedBlogger')
+    if (loggedBloggerJSON) {
+      const user = JSON.parse(loggedBloggerJSON)
+      setUser(user)
+      blogService.setToken(user.token)
+    }
+  }, [])
+
+  const handleLogout = async (event) => {
+    event.preventDefault()
+    window.localStorage.clear()
+    setUser(null)
+    location.reload()
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
-
     try {
       const user = await loginService.login({ username, password })
       window.localStorage.setItem('loggedBlogger', JSON.stringify(user))
+      blogService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
@@ -28,12 +50,12 @@ const App = () => {
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
-        username
+        username 
           <input type='text' value={username} name='username'
             onChange={({ target }) => setUsername(target.value)}/>
       </div>
       <div>
-        password
+        password 
           <input type='password' value={password} name='password'
             onChange={({ target }) => setPassword(target.value)}/>
       </div>
@@ -42,20 +64,18 @@ const App = () => {
   )
 
   const blogList = () => (
-    <>
-      <h2>logged in as {JSON.parse(window.localStorage.loggedBlogger).username}</h2>
+    <form onReset={handleLogout}>
       <h3>blogs</h3>
+        <p>
+          logged in as {JSON.parse(window.localStorage.loggedBlogger).username}
+          <button type='reset'>logout</button>
+        </p>
         {blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
         )}
-    </>
+    </form>
   )
 
-  useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
-  }, [])
 
   return (
     <div>
