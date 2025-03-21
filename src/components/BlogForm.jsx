@@ -14,13 +14,13 @@ const BlogForm = ({ createBlog }) => {
       <form onSubmit={addBlog}>
         title:
         <input type='text' value={newBlog.title} name='title'
-          onChange={({ target }) => setNewBlog({...newBlog, title: target.value})}/>
+          onChange={({ target }) => setNewBlog({ ...newBlog, title: target.value })}/>
         author:
         <input type='text' value={newBlog.author} name='author'
-          onChange={({ target }) => setNewBlog({...newBlog, author: target.value})}/>
+          onChange={({ target }) => setNewBlog({ ...newBlog, author: target.value })}/>
         url:
         <input type='text' value={newBlog.url} name='url'
-          onChange={({ target }) => setNewBlog({...newBlog, url: target.value})}/>
+          onChange={({ target }) => setNewBlog({ ...newBlog, url: target.value })}/>
         <button type='submit'>create</button>
       </form>
     </div>
@@ -28,6 +28,3 @@ const BlogForm = ({ createBlog }) => {
 }
 
 export default BlogForm
-
-
-  

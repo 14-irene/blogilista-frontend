@@ -1,17 +1,17 @@
-import { useState } from 'react'
-import Togglable from './Togglable'
+import { useState, forwardRef } from 'react'
+import PropTypes from 'prop-types'
 
 const Blog = ({ blog, likeBlog, removeBlog, loggedUser }) => {
-  const blogStyle = { 
+  const blogStyle = {
     border: '1px black',
     borderRadius: '3px',
     borderStyle: 'solid',
     margin: '1px',
-    backgroundColor: 'white' 
+    backgroundColor: 'white'
   }
   const [vis, setVis] = useState(false)
   const togVis = () => { setVis(!vis) }
-  
+
   const showRemove = blog.user.username === loggedUser.username
 
   const addLike = (event) => {
@@ -27,7 +27,7 @@ const Blog = ({ blog, likeBlog, removeBlog, loggedUser }) => {
   const RemoveButton = () => (
     <button type='button' onClick={delBlog}>remove</button>
   )
- 
+
   const FullBlog = () => (
     <div>
       {blog.url}<br/>
@@ -41,8 +41,14 @@ const Blog = ({ blog, likeBlog, removeBlog, loggedUser }) => {
     <div style={blogStyle}>
       {blog.title} {blog.author} <button type='button' onClick={togVis}>{vis ? 'hide' : 'view'}</button>
       {vis && FullBlog()}
-    </div>  
+    </div>
   )
+}
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  likeBlog: PropTypes.func.isRequired,
+  removeBlog: PropTypes.func.isRequired,
+  loggedUser: PropTypes.object.isRequired
 }
 
 export default Blog

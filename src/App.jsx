@@ -19,7 +19,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -70,25 +70,25 @@ const App = () => {
     setTimeout(() => setMessage(null), 5000)
   }
   const likeBlog = async (blogObject) => {
-    const updatedBlog = {...blogObject, likes: blogObject.likes + 1, user: blogObject.user._id}
+    const updatedBlog = { ...blogObject, likes: blogObject.likes + 1, user: blogObject.user._id }
     const res = await blogService.update(updatedBlog)
     const pos = blogs.indexOf(blogObject)
     blogObject.likes = blogObject.likes + 1
     setMessage(`liked blog ${res.title} by ${res.author}`)
     setTimeout(() => setMessage(null), 5000)
   }
-  
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
-        username 
-          <input type='text' value={username} name='username'
-            onChange={({ target }) => setUsername(target.value)}/>
+        username
+        <input type='text' value={username} name='username'
+          onChange={({ target }) => setUsername(target.value)}/>
       </div>
       <div>
-        password 
-          <input type='password' value={password} name='password'
-            onChange={({ target }) => setPassword(target.value)}/>
+        password
+        <input type='password' value={password} name='password'
+          onChange={({ target }) => setPassword(target.value)}/>
       </div>
       <button type='submit'>login</button>
     </form>
@@ -97,16 +97,16 @@ const App = () => {
   const blogList = () => (
     <div>
       <h1>blogs</h1>
-        <p>
-          logged in as {JSON.parse(window.localStorage.loggedBlogger).username}
-          <button onClick={handleLogout}>logout</button>
-        </p>
+      <p>
+        logged in as {JSON.parse(window.localStorage.loggedBlogger).username}
+        <button onClick={handleLogout}>logout</button>
+      </p>
       <Togglable buttonLabel='new blog' ref={blogFormRef}>
         <BlogForm createBlog={createBlog} />
       </Togglable>
-        {blogs.sort((a,b) => b.likes - a.likes).map(blog =>
-          <Blog key={blog.id} blog={blog} likeBlog={likeBlog} removeBlog={removeBlog} loggedUser={user}/>
-        )}
+      {blogs.sort((a,b) => b.likes - a.likes).map(blog =>
+        <Blog key={blog.id} blog={blog} likeBlog={likeBlog} removeBlog={removeBlog} loggedUser={user}/>
+      )}
     </div>
   )
 
@@ -116,7 +116,7 @@ const App = () => {
       <Popup text={errorMessage} color='red'/>
       <Popup text={message} color='green'/>
       {!user && loginForm()}
-      {user && blogList()}      
+      {user && blogList()}
     </div>
   )
 }
