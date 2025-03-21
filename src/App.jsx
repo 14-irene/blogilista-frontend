@@ -8,7 +8,6 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newBlog, setNewBlog] = useState({title: '', author: '', url: ''})
   const [message, setMessage] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
@@ -65,41 +64,6 @@ const App = () => {
     setTimeout(() => setMessage(null), 5000)
   }
   
-  const handleNewBlog = async (event) => {
-    event.preventDefault()
-    try {
-      const res = await blogService.create(newBlog)
-      setBlogs(blogs.concat(res))
-      setMessage(`added a new blog ${res.title} by ${res.author}`)
-      setTimeout(() => setMessage(null), 5000)
-      console.log('added new blog')
-    } catch {
-      setErrorMessage('failed to add blog')
-      setTimeout(() => setErrorMessage(null), 5000)
-    }
-  }
-  
-  const newBlogForm = () => (
-    <Togglable buttonLabel='new blog'>
-      <div>
-        title:
-        <input type='text' value={newBlog.title} name='title' 
-          onChange={({ target }) => setNewBlog({...newBlog, title: target.value})}/>
-      </div>
-      <div>
-        author:
-        <input type='text' value={newBlog.author} name='author'
-          onChange={({ target }) => setNewBlog({...newBlog, author: target.value})}/>
-      </div>
-      <div>
-        url:
-        <input type='text' value={newBlog.url} name='url'
-          onChange={({ target }) => setNewBlog({...newBlog, url: target.value})}/>
-      </div>
-      <button type='submit'form='blogList'>create</button>
-    </Togglable>
-  )
-
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
