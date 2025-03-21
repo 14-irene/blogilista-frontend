@@ -63,6 +63,14 @@ const App = () => {
     setMessage(`added a new blog ${res.title} by ${res.author}`)
     setTimeout(() => setMessage(null), 5000)
   }
+  const likeBlog = async (blogObject) => {
+    const updatedBlog = {...blogObject, likes: blogObject.likes + 1, user: blogObject.user._id}
+    const res = await blogService.update(updatedBlog)
+    const pos = blogs.indexOf(blogObject)
+    blogObject.likes = blogObject.likes + 1
+    setMessage(`liked blog ${res.title} by ${res.author}`)
+    setTimeout(() => setMessage(null), 5000)
+  }
   
   const loginForm = () => (
     <form onSubmit={handleLogin}>
@@ -91,7 +99,7 @@ const App = () => {
         <BlogForm createBlog={createBlog} />
       </Togglable>
         {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
+          <Blog key={blog.id} blog={blog} likeBlog={likeBlog} />
         )}
     </div>
   )
