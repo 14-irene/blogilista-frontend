@@ -63,6 +63,12 @@ const App = () => {
     setMessage(`added a new blog ${res.title} by ${res.author}`)
     setTimeout(() => setMessage(null), 5000)
   }
+  const removeBlog = async (blogObject) => {
+    const res = await blogService.remove(blogObject)
+    setBlogs(blogs.toSpliced(blogs.indexOf(blogObject), 1))
+    setMessage(`removed blog ${blogObject.title} by ${blogObject.author}`)
+    setTimeout(() => setMessage(null), 5000)
+  }
   const likeBlog = async (blogObject) => {
     const updatedBlog = {...blogObject, likes: blogObject.likes + 1, user: blogObject.user._id}
     const res = await blogService.update(updatedBlog)
@@ -99,7 +105,7 @@ const App = () => {
         <BlogForm createBlog={createBlog} />
       </Togglable>
         {blogs.sort((a,b) => b.likes - a.likes).map(blog =>
-          <Blog key={blog.id} blog={blog} likeBlog={likeBlog} />
+          <Blog key={blog.id} blog={blog} likeBlog={likeBlog} removeBlog={removeBlog} loggedUser={user}/>
         )}
     </div>
   )
