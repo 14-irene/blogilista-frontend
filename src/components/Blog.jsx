@@ -29,7 +29,7 @@ const Blog = ({ blog, likeBlog, removeBlog, loggedUser }) => {
   )
 
   const FullBlog = () => (
-    <div>
+    <div id='full-blog'>
       {blog.url}<br/>
       likes {blog.likes}<button type='button' onClick={addLike}>like</button><br/>
       {blog.user.name}

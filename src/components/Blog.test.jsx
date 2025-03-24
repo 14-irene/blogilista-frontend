@@ -3,19 +3,20 @@ import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 
 describe('<Blog />', () => {
-  const user = { username: 'testUser', name: 'root' }
+  const testUser = { username: 'testUser', name: 'root' }
   const blog = {
     title: 'testing blogs',
     author: 'ann b. author',
     url: 'example.url',
-    user: user
+    likes: 2,
+    user: testUser
   }
   const mockHandler = vi.fn()
   let container 
 
   beforeEach(() => {
     container = render(
-      <Blog blog={blog} likeBlog={mockHandler} removeBlog={mockHandler} loggedUser={user} />
+      <Blog blog={blog} likeBlog={mockHandler} removeBlog={mockHandler} loggedUser={testUser} />
     ).container
   })
 
@@ -24,7 +25,16 @@ describe('<Blog />', () => {
   })
 
   test('doesn\'t render url, likes or user by default', () => {
-    const element = screen.queryByText('i hope nothing renders')  
+    const element = screen.queryByText('example.url')  
+    console.log(element)
     expect(element).toBeNull()
+  })
+
+  test('renders url, likes and user when view button is clicked', async () => {
+    const user = userEvent.setup()
+    const button = screen.getByText('view')
+    await user.click(button)
+    const element = screen.getByText(/example.url*likes 2*root*/)
+
   })
 })
