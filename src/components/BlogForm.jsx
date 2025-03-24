@@ -13,13 +13,13 @@ const BlogForm = ({ createBlog }) => {
       <h2>create a new blog</h2>
       <form onSubmit={addBlog}>
         title:
-        <input type='text' value={newBlog.title} name='title'
+        <input type='text' value={newBlog.title} name='title' placeholder='enter title'
           onChange={({ target }) => setNewBlog({ ...newBlog, title: target.value })}/>
         author:
-        <input type='text' value={newBlog.author} name='author'
+        <input type='text' value={newBlog.author} name='author' placeholder='enter author'
           onChange={({ target }) => setNewBlog({ ...newBlog, author: target.value })}/>
         url:
-        <input type='text' value={newBlog.url} name='url'
+        <input type='text' value={newBlog.url} name='url'placeholder='enter url'
           onChange={({ target }) => setNewBlog({ ...newBlog, url: target.value })}/>
         <button type='submit'>create</button>
       </form>
