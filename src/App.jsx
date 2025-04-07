@@ -79,18 +79,18 @@ const App = () => {
   }
 
   const loginForm = () => (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={handleLogin} data-testid='loginForm'>
       <div>
         username
-        <input type='text' value={username} name='username'
+        <input type='text' value={username} name='username' data-testId='username'
           onChange={({ target }) => setUsername(target.value)}/>
       </div>
       <div>
         password
-        <input type='password' value={password} name='password'
+        <input type='password' value={password} name='password' data-testId='password'
           onChange={({ target }) => setPassword(target.value)}/>
       </div>
-      <button type='submit'>login</button>
+      <button type='submit' data-testid='login'>login</button>
     </form>
   )
 
@@ -113,8 +113,8 @@ const App = () => {
 
   return (
     <div>
-      <Popup text={errorMessage} color='red'/>
-      <Popup text={message} color='green'/>
+      <Popup text={errorMessage} color='red' data-testId='error'/>
+      <Popup text={message} color='green'data-testId='logged'/>
       {!user && loginForm()}
       {user && blogList()}
     </div>

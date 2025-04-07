@@ -1,6 +1,8 @@
 const Popup = ({ text, color }) =>
   text === null ? null :
-    <div style={{
+    <div 
+      className='popup'
+      style={{
       border: `2px ${color}`,
       borderRadius: '5px',
       borderStyle: 'solid',
