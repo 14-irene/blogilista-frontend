@@ -12,6 +12,11 @@ const Blog = ({ blog, likeBlog, removeBlog, loggedUser }) => {
   const [vis, setVis] = useState(false)
   const togVis = () => { setVis(!vis) }
 
+  const [showConfirm, setShowConfirm] = useState(false)
+  const togRemove = (event) => { 
+    event.preventDefault()
+    setShowConfirm(!showConfirm) }
+
   const showRemove = blog.user.username === loggedUser.username
 
   const addLike = (event) => {
@@ -20,18 +25,21 @@ const Blog = ({ blog, likeBlog, removeBlog, loggedUser }) => {
   }
   const delBlog = (event) => {
     event.preventDefault()
-    if (window.confirm(`remove blog ${blog.title} by ${blog.author}`)) {
-      removeBlog(blog)
+    removeBlog(blog)
+  }
+  const RemoveButton = () => { 
+    if (!showConfirm) {
+      return(<><button type='button' onClick={togRemove}>remove</button></>)
+    } else {
+      return(<><button type='button' onClick={delBlog}>yes</button>
+        <button type='button' onClick={togRemove}>no</button></>)
     }
   }
-  const RemoveButton = () => (
-    <button type='button' onClick={delBlog}>remove</button>
-  )
 
   const FullBlog = () => (
     <div id='full-blog'>
       {blog.url}<br/>
-      <span>likes {blog.likes}</span>
+      likes {blog.likes}
       <button type='button' onClick={addLike} data-testid='like'>like</button><br/>
       {blog.user.name}
       {showRemove && RemoveButton()}

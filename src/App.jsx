@@ -17,10 +17,12 @@ const App = () => {
   const blogFormRef = useRef()
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )
-  }, [blogs])
+    const getBlogs = async () => {
+      const allBlogs = await blogService.getAll()
+      setBlogs(allBlogs)
+    }
+    getBlogs()
+  }, [setBlogs])
 
   useEffect(() => {
     const loggedBloggerJSON = window.localStorage.getItem('loggedBlogger')
@@ -82,12 +84,12 @@ const App = () => {
     <form onSubmit={handleLogin} data-testid='loginForm'>
       <div>
         username
-        <input type='text' value={username} name='username' data-testId='username'
+        <input type='text' value={username} name='username' data-testid='username'
           onChange={({ target }) => setUsername(target.value)}/>
       </div>
       <div>
         password
-        <input type='password' value={password} name='password' data-testId='password'
+        <input type='password' value={password} name='password' data-testid='password'
           onChange={({ target }) => setPassword(target.value)}/>
       </div>
       <button type='submit' data-testid='login'>login</button>
