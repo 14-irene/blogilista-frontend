@@ -20,7 +20,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )
-  }, [])
+  }, [blogs])
 
   useEffect(() => {
     const loggedBloggerJSON = window.localStorage.getItem('loggedBlogger')

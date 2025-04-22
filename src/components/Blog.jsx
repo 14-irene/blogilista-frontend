@@ -31,7 +31,8 @@ const Blog = ({ blog, likeBlog, removeBlog, loggedUser }) => {
   const FullBlog = () => (
     <div id='full-blog'>
       {blog.url}<br/>
-      likes {blog.likes}<button type='button' onClick={addLike}>like</button><br/>
+      <span>likes {blog.likes}</span>
+      <button type='button' onClick={addLike} data-testid='like'>like</button><br/>
       {blog.user.name}
       {showRemove && RemoveButton()}
     </div>
@@ -39,7 +40,7 @@ const Blog = ({ blog, likeBlog, removeBlog, loggedUser }) => {
 
   return(
     <div style={blogStyle}>
-      {blog.title} {blog.author} <button type='button' onClick={togVis}>{vis ? 'hide' : 'view'}</button>
+      {blog.title} {blog.author} <button type='button' onClick={togVis} data-testid='view'>{vis ? 'hide' : 'view'}</button>
       {vis && FullBlog()}
     </div>
   )
